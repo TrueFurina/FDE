@@ -119,8 +119,9 @@ def search(query: str = "烟酰胺", top_k: int = 3):
 
 if __name__ == "__main__":
     import uvicorn
+    import config
     print("=" * 50)
     print("  美妆零售知识库 API 服务")
-    print("  文档: http://localhost:8000/docs")
+    print(f"  文档: http://localhost:{config.WEB_PORT}/docs")
     print("=" * 50)
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=config.WEB_HOST, port=config.WEB_PORT)
