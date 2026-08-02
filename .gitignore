@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 模型缓存
+.huggingface/
+models/
+
+# 本地索引（大文件，可重建）
+# data/faiss_index.bin
+# data/bm25_index.pkl
+
+# 环境
+.env
+*.local
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 输出截图（可选上传）
+# output/*.png
