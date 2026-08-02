@@ -1,0 +1,67 @@
+{
+  "triad_scores": {
+    "context_relevance": 1.0,
+    "groundedness": 0.434,
+    "answer_relevance": 0.68
+  },
+  "overall": 0.705,
+  "per_question": [
+    {
+      "question": "烟酰胺有什么功效？",
+      "context_relevance": 1.0,
+      "groundedness": 0.5,
+      "answer_relevance": 0.4,
+      "ungrounded_claims": [
+        "烟酰胺精华主要用于提亮肤色",
+        "搭配方案中建议早间使用烟酰胺精华配合修护面霜和防晒",
+        "初次使用可能有轻微刺痛，属正常现象，如持续不适请停用"
+      ],
+      "has_sources": true
+    },
+    {
+      "question": "敏感肌可以用视黄醇吗？",
+      "context_relevance": 1.0,
+      "groundedness": 0.67,
+      "answer_relevance": 1.0,
+      "ungrounded_claims": [
+        "若出现刺痛、发红应立即停用并咨询专业人士（资料A）",
+        "若您同时使用其他酸类成分（如水杨酸、果酸），也需从低浓度、低频次起步（资料A）",
+        "如症状持续，建议咨询皮肤科医生"
+      ],
+      "has_sources": true
+    },
+    {
+      "question": "这款面霜多少钱？",
+      "context_relevance": 1.0,
+      "groundedness": 1.0,
+      "answer_relevance": 0.0,
+      "ungrounded_claims": [],
+      "has_sources": true
+    },
+    {
+      "question": "拆封了还能退货吗？",
+      "context_relevance": 1.0,
+      "groundedness": 0.0,
+      "answer_relevance": 1.0,
+      "ungrounded_claims": [
+        "质量问题退款时效为仓库签收后1-3个工作日"
+      ],
+      "has_sources": true
+    },
+    {
+      "question": "玻尿酸和神经酰胺哪个更保湿？",
+      "context_relevance": 1.0,
+      "groundedness": 0.0,
+      "answer_relevance": 1.0,
+      "ungrounded_claims": [
+        "玻尿酸和神经酰胺的保湿机制不同，无法简单比较谁更“保湿”",
+        "玻尿酸主打“抓水”，能吸收并锁住水分，适合各肤质日常补水",
+        "神经酰胺主打“修护屏障”，能增强皮肤锁水能力",
+        "若追求即时水润，可选玻尿酸精华；若需长效修护干燥敏感，可选神经酰胺面霜",
+        "两者搭配使用（如早晚方案B）效果更佳",
+        "具体请根据肤质调整，如有不适请咨询专业人士"
+      ],
+      "has_sources": true
+    }
+  ]
+}
