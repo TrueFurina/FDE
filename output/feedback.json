@@ -54,5 +54,50 @@
     "session_id": "s_opt2",
     "sources": [],
     "comment": ""
+  },
+  {
+    "timestamp": "2026-08-10 01:32:54",
+    "query": "烟酰胺有什么功效？",
+    "answer": "烟酰胺有助于提亮肤色",
+    "feedback": "up",
+    "session_id": "import_1",
+    "sources": [],
+    "comment": "批量导入"
+  },
+  {
+    "timestamp": "2026-08-10 01:32:54",
+    "query": "这款面霜多少钱？",
+    "answer": "神经酰胺修护面霜139元",
+    "feedback": "up",
+    "session_id": "import_2",
+    "sources": [],
+    "comment": "批量导入"
+  },
+  {
+    "timestamp": "2026-08-10 01:32:54",
+    "query": "敏感肌可以用视黄醇吗？",
+    "answer": "建议先做局部测试",
+    "feedback": "down",
+    "session_id": "import_3",
+    "sources": [],
+    "comment": "回答需优化"
+  },
+  {
+    "timestamp": "2026-08-10 01:32:54",
+    "query": "玻尿酸精华怎么用？",
+    "answer": "洁面后取2-3滴按压至吸收",
+    "feedback": "up",
+    "session_id": "import_4",
+    "sources": [],
+    "comment": "批量导入"
+  },
+  {
+    "timestamp": "2026-08-10 01:32:54",
+    "query": "拆封了还能退货吗？",
+    "answer": "未拆封支持七天无理由",
+    "feedback": "neutral",
+    "session_id": "import_5",
+    "sources": [],
+    "comment": "批量导入"
   }
 ]
