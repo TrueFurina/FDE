@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2026-08-10 00:54:35",
+    "component": "llm_api",
+    "error_count": 3,
+    "window_seconds": 60,
+    "recent_errors": [
+      "连接超时 #1",
+      "连接超时 #2",
+      "连接超时 #3"
+    ],
+    "level": "ALERT"
+  }
+]

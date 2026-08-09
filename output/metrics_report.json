@@ -1,0 +1,36 @@
+{
+  "process": {
+    "pid": 29048,
+    "cpu_percent": 0.0,
+    "memory_mb": 20.4,
+    "threads": 4,
+    "uptime_seconds": 0
+  },
+  "system": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.9",
+    "cpu_cores": 24,
+    "memory_total_mb": 16160,
+    "memory_used_percent": 72.5,
+    "disk_usage_percent": 83.5
+  },
+  "runtime": {
+    "sessions": {
+      "total_sessions": 8,
+      "total_rounds": 53,
+      "avg_rounds": 6.6
+    },
+    "cache_hits": 0,
+    "cache_misses": 0,
+    "cache_size": 0,
+    "cache_ttl": 300
+  },
+  "files": {
+    "data_files": 9,
+    "data_size_kb": 139.4,
+    "output_files": 26,
+    "backups": 1
+  },
+  "collected_at": "2026-08-10 00:54:03",
+  "elapsed_ms": 379.0
+}
