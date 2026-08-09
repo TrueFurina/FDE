@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-08-10 01:26:50",
+  "queries": {
+    "total_queries": 2,
+    "unique_queries": 2,
+    "top_queries": [
+      [
+        "烟酰胺有什么功效？",
+        1
+      ],
+      [
+        "这款面霜多少钱？",
+        1
+      ]
+    ],
+    "intent_distribution": {
+      "成分功效": 1,
+      "产品咨询": 1
+    }
+  },
+  "requests": {
+    "total_requests": 6,
+    "path_distribution": {
+      "/api/answer": 4,
+      "/health": 1,
+      "/api/compliance": 1
+    },
+    "status_distribution": {
+      "200": 5,
+      "500": 1
+    },
+    "avg_duration_ms": 1359.5
+  }
+}

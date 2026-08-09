@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-08-10 01:27:41",
+  "en_to_cn_mapping_count": 35,
+  "test_results": [
+    {
+      "query": "What is niacinamide good for?",
+      "translated": "What is 烟酰胺 good for?"
+    },
+    {
+      "query": "Is retinol suitable for sensitive skin?",
+      "translated": "Is 视黄醇 suitable for 敏感肌 skin?"
+    },
+    {
+      "query": "How much is this cream?",
+      "translated": "How much is this 面霜?"
+    },
+    {
+      "query": "Can I use salicylic acid?",
+      "translated": "Can I use 水杨酸 acid?"
+    },
+    {
+      "query": "What does hyaluronic acid do?",
+      "translated": "What does 玻尿酸 acid do?"
+    }
+  ]
+}
