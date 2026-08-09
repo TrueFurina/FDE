@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-08-10 01:21:15",
+  "summary": {
+    "ok": 7,
+    "fail": 0,
+    "overall": "consistent"
+  },
+  "checks": [
+    {
+      "check": "知识文档",
+      "status": "ok",
+      "detail": "必需文档缺失: 无, 当前共 5 篇"
+    },
+    {
+      "check": "分块完整性",
+      "status": "ok",
+      "detail": "48 块 | 空块:0 | 重复:0 | 缺字段:0"
+    },
+    {
+      "check": "FAISS一致性",
+      "status": "ok",
+      "detail": "FAISS 48 向量 vs chunks 48 块"
+    },
+    {
+      "check": "BM25一致性",
+      "status": "ok",
+      "detail": "BM25 48 文档 vs chunks 48 块"
+    },
+    {
+      "check": "索引文件-faiss_index.bin",
+      "status": "ok",
+      "detail": "存在 (73773 字节)"
+    },
+    {
+      "check": "索引文件-bm25_index.pkl",
+      "status": "ok",
+      "detail": "存在 (161930 字节)"
+    },
+    {
+      "check": "索引文件-embedding_info.json",
+      "status": "ok",
+      "detail": "存在 (103 字节)"
+    }
+  ]
+}

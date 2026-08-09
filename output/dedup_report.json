@@ -1,0 +1,31 @@
+{
+  "original": 5,
+  "kept": 3,
+  "removed": 2,
+  "removed_items": [
+    {
+      "query": "烟酰胺有什么功效",
+      "duplicate_of": "烟酰胺有什么功效？",
+      "reason": "归一化后重复"
+    },
+    {
+      "query": "烟酰胺有什么功效？",
+      "duplicate_of": "烟酰胺有什么功效？",
+      "reason": "归一化后重复"
+    }
+  ],
+  "deduped": [
+    {
+      "query": "烟酰胺有什么功效？",
+      "answer": "烟酰胺有助于提亮肤色"
+    },
+    {
+      "query": "敏感肌可以用视黄醇吗？",
+      "answer": "敏感肌需谨慎建立耐受"
+    },
+    {
+      "query": "这款面霜多少钱？",
+      "answer": "神经酰胺修护面霜139元"
+    }
+  ]
+}
