@@ -1,0 +1,15 @@
+{
+  "version": "v_20260810_005858",
+  "created_at": "2026-08-10 00:58:58",
+  "files": [
+    "chunks.json",
+    "faiss_index.bin",
+    "bm25_index.pkl",
+    "embedding_info.json",
+    "01_产品目录.md",
+    "02_成分知识库.md",
+    "03_使用方法指南.md",
+    "04_售后服务政策.md"
+  ],
+  "label": ""
+}

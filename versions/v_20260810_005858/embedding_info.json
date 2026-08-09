@@ -1,0 +1,1 @@
+{"model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "dim": 384, "chunk_count": 44}
