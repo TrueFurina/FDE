@@ -77,8 +77,10 @@ class AnswerGenerator:
             "avg_rounds": round(total_rounds / len(self.sessions), 1) if self.sessions else 0,
         }
 
-    def _call_llm(self, query: str, context: list, history: list = None) -> str:
-        """调用 DeepSeek API 生成回答"""
+    def _call_llm(self, query: str, context: list, history: list = None, max_retries: int = 2) -> str:
+        """调用 DeepSeek API 生成回答（带重试与降级机制）
+        max_retries: API 失败时的最大重试次数，全部失败后自动降级回答
+        """
         from openai import OpenAI
 
         client = OpenAI(api_key=self.api_key, base_url=self.base_url)
@@ -113,24 +115,29 @@ class AnswerGenerator:
         user_prompt = f"客户问题：{query}\n\n参考资料：\n{context_text}"
         messages.append({"role": "user", "content": user_prompt})
 
-        try:
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                temperature=0.3,
-                max_tokens=500,
-            )
-            return response.choices[0].message.content.strip()
-        except Exception as e:
-            # API 失败时降级：返回检索摘要
-            fallback = f"根据知识库资料，为您找到以下信息：\n\n"
-            for i, c in enumerate(context[:2]):
-                fallback += f"- {c['source']}：{c['text'][:80]}...\n"
-            fallback += "\n（注：当前为离线降级回答，完整回答需要 LLM API 可用）"
-            return fallback
+        # 带重试的 API 调用
+        last_error = None
+        for attempt in range(max_retries + 1):
+            try:
+                response = client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=messages,
+                    temperature=0.3,
+                    max_tokens=500,
+                )
+                return response.choices[0].message.content.strip()
+            except Exception as e:
+                last_error = str(e)[:100]
+                if attempt < max_retries:
+                    time.sleep(1.5 * (attempt + 1))  # 指数退避重试
+                    continue
+
+        # 全部重试失败 → 降级回答（返回检索摘要）
+        fallback = f"（LLM 服务暂不可用，以下为知识库检索摘要）\n\n"
+        for i, c in enumerate(context[:2]):
+            fallback += f"- {c['source']}：{c['text'][:80]}...\n"
+        fallback += f"\n（注：重试{max_retries}次失败: {last_error}）"
+        return fallback
 
     def _rewrite_query(self, query: str) -> str:
         """用 LLM 重写查询，提高检索召回率"""
