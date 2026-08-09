@@ -1,0 +1,22 @@
+{
+  "cache_hits": 3,
+  "cache_misses": 2,
+  "total_requests": 5,
+  "hit_rate": 0.6,
+  "hit_rate_percent": 60.0,
+  "cache_size": 2,
+  "cache_ttl_seconds": 300,
+  "entries": [
+    {
+      "query": "烟酰胺有什么功效？",
+      "age_seconds": 3.7,
+      "answer_length": 143
+    },
+    {
+      "query": "敏感肌可以用视黄醇吗？",
+      "age_seconds": 0.0,
+      "answer_length": 170
+    }
+  ],
+  "generated_at": "2026-08-09 19:06:35"
+}

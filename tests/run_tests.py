@@ -397,6 +397,38 @@ def run_test_suite():
     results["pass"] += e2e_pass
     results["fail"] += e2e_total - e2e_pass
 
+    # ---- 5. 多轮对话测试（第8轮新增）----
+    print("\n" + "=" * 70)
+    print("  五、多轮对话测试（引用上文）")
+    print("=" * 70)
+    multi_pass = 0
+    multi_total = 0
+    multi_cases = [
+        # (第一问, 第二问引用, 期望引用关键词) —— 期望词选回答中稳定出现的主题词
+        ("烟酰胺焕亮精华适合什么肤质？", "它一天用几次？", "烟酰胺"),
+        ("这款面霜多少钱？", "那款修护的呢？", "面霜"),
+        ("敏感肌可以用视黄醇吗？", "那有什么替代成分？", "替代"),
+        ("玻尿酸精华怎么用？", "它能和面霜一起用吗？", "玻尿酸"),
+        ("孕妇可以用水杨酸吗？", "那孕早期呢？", "水杨酸"),
+        ("退货多久能收到退款？", "质量问题也是这个时间吗？", "退款"),
+    ]
+
+    for q1, q2, expect_kw in multi_cases:
+        multi_total += 1
+        sid = f"multi_test_{multi_total}"
+        r1 = agent.answer(q1, session_id=sid)
+        r2 = agent.answer(q2, session_id=sid)
+        # 第二问应能引用上文（回答中包含期望关键词）
+        references_prev = expect_kw in r2["answer"]
+        ok = references_prev and bool(r2["answer"])
+        multi_pass += ok
+        status = "✅" if ok else "❌"
+        print(f"  {status} [{multi_total}] Q1:{q1[:15]}... Q2:{q2[:15]}... 引用:{'是' if references_prev else '否'}")
+
+    results["total"] += multi_total
+    results["pass"] += multi_pass
+    results["fail"] += multi_total - multi_pass
+
     # ---- 汇总 ----
     print("\n" + "=" * 70)
     print("  测试汇总")
