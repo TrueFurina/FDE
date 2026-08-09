@@ -57,6 +57,12 @@ INGREDIENT_KEYWORDS = [
 USAGE_STRONG_KEYWORDS = [
     "怎么用", "如何使用", "用法", "使用步骤", "每天几次", "用多久",
     "早晚", "用量", "涂抹", "频率", "用几次", "什么时候用",
+    "每天用", "天天用", "能用吗", "可以用吗", "需要每天",
+]
+
+# 价格类强意图词：明确指向价格查询的问题，优先级高于成分词
+PRICE_STRONG_KEYWORDS = [
+    "多少钱", "价格", "价位", "几块钱", "什么价", "售价",
 ]
 
 USAGE_KEYWORDS = [
@@ -115,10 +121,14 @@ class IntentRouter:
         if product_kw:
             hits["product"] = product_kw
 
-        # 判断最终意图（优先级：risk > 强使用词 > after_sale > ingredient > usage > product > general）
+        # 判断最终意图（优先级：risk > 价格强词 > 强使用词 > after_sale > ingredient > usage > product > general）
         usage_strong_kw = [kw for kw in USAGE_STRONG_KEYWORDS if kw.lower() in lower]
+        price_strong_kw = [kw for kw in PRICE_STRONG_KEYWORDS if kw.lower() in lower]
         if "risk" in hits:
             intent = Intent.RISK
+        elif price_strong_kw:
+            intent = Intent.PRODUCT
+            hits["price_strong"] = price_strong_kw
         elif usage_strong_kw:
             intent = Intent.USAGE
             hits["usage_strong"] = usage_strong_kw

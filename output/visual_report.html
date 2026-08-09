@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>美妆知识库系统 · 测试可视化报告</title>
+<style>
+  body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f7fa; margin: 0; padding: 30px; color: #333; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { text-align: center; color: #1a1a2e; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+  .card .value { font-size: 2.2em; font-weight: 700; }
+  .card .label { color: #888; font-size: 0.9em; margin-top: 4px; }
+  .card.green .value { color: #16a34a; }
+  .card.blue .value { color: #2563eb; }
+  .card.orange .value { color: #ea580c; }
+  .card.purple .value { color: #7c3aed; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .section h2 { margin-top: 0; font-size: 1.2em; color: #1a1a2e; }
+  .bar-row { display: flex; align-items: center; margin: 10px 0; gap: 12px; }
+  .bar-label { width: 120px; font-size: 0.9em; color: #555; }
+  .bar-track { flex: 1; background: #eee; border-radius: 8px; height: 20px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, #4ade80, #16a34a); border-radius: 8px; transition: width 0.5s; }
+  .bar-value { width: 130px; font-size: 0.85em; color: #555; text-align: right; }
+  .donut-wrap { display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+  .legend { font-size: 0.9em; color: #555; }
+  .legend div { margin: 4px 0; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+  .footer { text-align: center; color: #999; font-size: 0.85em; margin-top: 30px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>💄 美妆知识库系统 · 测试可视化报告</h1>
+  <p class="subtitle">生成时间：2026-08-09 17:09:47 | RalphLoop 第4轮</p>
+
+  <div class="cards">
+    <div class="card green"><div class="value">100.0%</div><div class="label">测试通过率</div></div>
+    <div class="card blue"><div class="value">59</div><div class="label">测试用例总数</div></div>
+    <div class="card orange"><div class="value">25/25</div><div class="label">边界对抗测试</div></div>
+    <div class="card purple"><div class="value">1.00</div><div class="label">RAG Triad 综合</div></div>
+  </div>
+
+  <div class="section">
+    <h2>📊 各模块通过率</h2>
+    
+        <div class="bar-row">
+            <span class="bar-label">intent</span>
+            <div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div>
+            <span class="bar-value">28/28 (100%)</span>
+        </div>
+        <div class="bar-row">
+            <span class="bar-label">compliance</span>
+            <div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div>
+            <span class="bar-value">7/7 (100%)</span>
+        </div>
+        <div class="bar-row">
+            <span class="bar-label">rag</span>
+            <div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div>
+            <span class="bar-value">5/5 (100%)</span>
+        </div>
+        <div class="bar-row">
+            <span class="bar-label">e2e</span>
+            <div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div>
+            <span class="bar-value">19/19 (100%)</span>
+        </div>
+  </div>
+
+  <div class="section">
+    <h2>🧠 RAG Triad 三指标</h2>
+    <div class="donut-wrap">
+      <div>
+        <div class="bar-row"><span class="bar-label">上下文相关性</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">1.00</span></div>
+        <div class="bar-row"><span class="bar-label">回答忠实度</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">1.00</span></div>
+        <div class="bar-row"><span class="bar-label">答案相关性</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">1.00</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🔄 功能版本迭代</h2>
+    <div class="legend">
+      <div><span class="dot" style="background:#16a34a"></span>v1.0 基础 RAG + 意图 + 合规</div>
+      <div><span class="dot" style="background:#2563eb"></span>v1.1 查询重写 + 标题感知分块 + Grounding 护栏</div>
+      <div><span class="dot" style="background:#ea580c"></span>v1.2 多轮对话 + 知识库扩充 + RRF 加权</div>
+      <div><span class="dot" style="background:#7c3aed"></span>v1.3 API 多轮 + 忠实度1.0 + 反馈闭环</div>
+      <div><span class="dot" style="background:#db2777"></span>v1.4 热更新 + 高频问答集 + 可视化</div>
+    </div>
+  </div>
+
+  <div class="footer">FDE 共学营大作业 · 美妆零售知识库与客服协作 · RalphLoop 自动优化循环</div>
+</div>
+</body>
+</html>

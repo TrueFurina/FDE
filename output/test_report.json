@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-09T17:00:18.939992",
-  "total": 39,
-  "passed": 39,
+  "timestamp": "2026-08-09T17:11:10.653856",
+  "total": 59,
+  "passed": 59,
   "failed": 0,
   "pass_rate": 100.0,
   "sections": {
     "intent": {
-      "passed": 18,
-      "total": 18
+      "passed": 28,
+      "total": 28
     },
     "compliance": {
       "passed": 7,
@@ -18,8 +18,8 @@
       "total": 5
     },
     "e2e": {
-      "passed": 9,
-      "total": 9
+      "passed": 19,
+      "total": 19
     }
   }
 }
