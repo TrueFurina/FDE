@@ -1,0 +1,18 @@
+{
+  "name": "backup_20260810_001256",
+  "created_at": "2026-08-10 00:12:56",
+  "files_saved": [
+    "data/chunks.json",
+    "data/faiss_index.bin",
+    "data/bm25_index.pkl",
+    "data/embedding_info.json",
+    "data/01_产品目录.md",
+    "data/02_成分知识库.md",
+    "data/03_使用方法指南.md",
+    "data/04_售后服务政策.md",
+    "output/feedback.json",
+    "output/sessions.json",
+    "output/pending_optimization.json"
+  ],
+  "files_skipped": []
+}

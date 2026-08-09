@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-08-10 00:13:59",
+  "elapsed_ms": 285.5,
+  "summary": {
+    "ok": 10,
+    "warn": 0,
+    "fail": 0,
+    "overall": "healthy"
+  },
+  "checks": [
+    {
+      "component": "数据-chunks.json",
+      "status": "ok",
+      "detail": "存在 (20235 字节)"
+    },
+    {
+      "component": "数据-faiss_index.bin",
+      "status": "ok",
+      "detail": "存在 (67629 字节)"
+    },
+    {
+      "component": "数据-bm25_index.pkl",
+      "status": "ok",
+      "detail": "存在 (42502 字节)"
+    },
+    {
+      "component": "数据-embedding_info.json",
+      "status": "ok",
+      "detail": "存在 (103 字节)"
+    },
+    {
+      "component": "知识文档",
+      "status": "ok",
+      "detail": "4 篇"
+    },
+    {
+      "component": "RAG索引",
+      "status": "ok",
+      "detail": "FAISS 44 向量"
+    },
+    {
+      "component": "LLM配置",
+      "status": "ok",
+      "detail": "API Key 已配置"
+    },
+    {
+      "component": "会话持久化",
+      "status": "ok",
+      "detail": "8 个会话"
+    },
+    {
+      "component": "反馈数据",
+      "status": "ok",
+      "detail": "6 条反馈"
+    },
+    {
+      "component": "输出报告",
+      "status": "ok",
+      "detail": "6/6 个报告"
+    }
+  ]
+}

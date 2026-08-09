@@ -1,0 +1,56 @@
+# 美妆零售知识库系统 - 部署配置
+# 支持通过环境变量覆盖，实现一键部署
+
+# ===== 服务配置 =====
+server:
+  host: ${HOST:-0.0.0.0}
+  port: ${PORT:-8502}
+  api_port: ${API_PORT:-8000}
+
+# ===== 数据配置 =====
+data:
+  dir: ${DATA_DIR:-data}
+  chunk_size: 300
+  chunk_overlap: 50
+
+# ===== LLM 配置 =====
+llm:
+  api_key: ${DEEPSEEK_API_KEY:-}
+  base_url: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+  model: ${DEEPSEEK_MODEL:-deepseek-chat}
+  temperature: 0.3
+  max_tokens: 500
+  max_retries: 2
+
+# ===== 嵌入模型配置 =====
+embedding:
+  model: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  dim: 384
+  hf_endpoint: ${HF_ENDPOINT:-https://hf-mirror.com}
+
+# ===== 检索配置 =====
+retrieval:
+  top_k: 5
+  vector_top: 10
+  bm25_top: 10
+  vec_threshold: 0.5
+  rrf_vector_k: 60
+  rrf_bm25_k: 20
+  rewrite_threshold: 0.02
+
+# ===== 缓存配置 =====
+cache:
+  enabled: true
+  ttl_seconds: 300
+
+# ===== 会话配置 =====
+session:
+  max_rounds: 10
+  history_rounds: 3
+  persist: true
+  file: output/sessions.json
+
+# ===== 风控配置 =====
+guard:
+  max_query_len: 200
+  injection_check: true
