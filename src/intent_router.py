@@ -28,7 +28,15 @@ RISK_KEYWORDS = [
     "过敏", "刺痛", "发红", "红肿", "起疹", "瘙痒", "痒", "肿", "呼吸困难",
     "治疗", "治愈", "处方", "医院", "医生", "药用", "疗程", "患者", "就医",
     "不良反应", "副作用", "烂脸", "毁容",
+    # 特殊人群（儿童/哺乳期高危；孕妇走成分检索+安全提示）
+    "哺乳期", "产妇", "儿童", "小孩", "婴儿", "婴幼儿",
+    "3岁", "三岁", "宝宝",
+    # 医疗功效暗示
+    "变白", "去疤", "祛疤", "治痘", "消炎", "杀菌", "抗炎",
 ]
+
+# 孕妇相关（单独处理：走成分检索但需安全提示）
+PREGNANCY_KEYWORDS = ["孕妇", "孕期", "怀孕"]
 
 AFTER_SALE_KEYWORDS = [
     "退货", "退款", "退换", "售后", "物流", "快递", "发货", "签收",
@@ -127,6 +135,9 @@ class IntentRouter:
 
         # 判断是否涉及肤质问题（辅助信息）
         skin_type_kw = [kw for kw in SKIN_TYPE_KEYWORDS if kw.lower() in lower]
+
+        # 判断是否涉及孕妇（安全提示，不直接转人工，走成分检索）
+        pregnancy_kw = [kw for kw in PREGNANCY_KEYWORDS if kw.lower() in lower]
 
         return {
             "intent": intent.value,

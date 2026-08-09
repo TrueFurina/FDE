@@ -117,30 +117,57 @@ class RAGEngine:
         return top_indices, top_scores
 
     @staticmethod
-    def _rrf_score(ranks_dict, k=60):
-        """RRF 融合排序"""
+    def _rrf_score_weighted(ranks_dict, k_dict=None):
+        """RRF 融合排序（支持每路不同权重，k 越小权重越高）"""
+        if k_dict is None:
+            k_dict = {src: 60 for src in ranks_dict}
         score = {}
         for source, ranks in ranks_dict.items():
+            k = k_dict.get(source, 60)
             for i, doc_idx in enumerate(ranks):
                 if doc_idx not in score:
                     score[doc_idx] = 0
                 score[doc_idx] += 1.0 / (k + i + 1)
         return sorted(score.items(), key=lambda x: -x[1])
 
-    def hybrid_search(self, query, top_k=5, vector_top=10, bm25_top=10):
-        """混合检索：向量 + BM25 + RRF"""
+    @staticmethod
+    def _rrf_score(ranks_dict, k=60):
+        """RRF 融合排序（默认权重）"""
+        return RAGEngine._rrf_score_weighted(ranks_dict, {src: k for src in ranks_dict})
+
+    def hybrid_search(self, query, top_k=5, vector_top=10, bm25_top=10, vec_threshold=0.5):
+        """混合检索：向量 + BM25 + RRF
+        vec_threshold: 向量检索相似度阈值，低于此值的向量结果不参与 RRF（过滤噪声）
+        BM25 权重显著更高（k=20），因为关键词精确匹配对成分/产品名更可靠
+        """
         # 1. 两个检索器并行
         vec_indices, vec_scores = self._vector_search(query, vector_top)
         bm25_indices, bm25_scores = self._bm25_search(query, bm25_top)
 
-        # 2. RRF 融合
+        # 2. 过滤低分向量结果（避免噪声干扰 RRF 融合）
+        valid_vec = [
+            idx for idx, sc in zip(vec_indices, vec_scores)
+            if sc >= vec_threshold
+        ]
+
+        # 2.5 向量结果按来源文档去重（每文档只保留最高分 chunk，防止同文档噪声在 RRF 累计）
+        seen_sources = set()
+        dedup_vec = []
+        for idx in valid_vec:
+            src = self.chunks[idx]["source"]
+            if src not in seen_sources:
+                seen_sources.add(src)
+                dedup_vec.append(idx)
+        valid_vec = dedup_vec
+
+        # 3. RRF 融合（BM25 权重更高：k=20；向量 k=60）
         ranks_dict = {
-            "vector": list(vec_indices),
+            "vector": valid_vec,
             "bm25": list(bm25_indices),
         }
-        fused = self._rrf_score(ranks_dict)
+        fused = self._rrf_score_weighted(ranks_dict, {"vector": 60, "bm25": 20})
 
-        # 3. 取 Top-K，附加来源信息
+        # 4. 取 Top-K，附加来源信息
         results = []
         for doc_idx, rrf_score in fused[:top_k]:
             if doc_idx >= len(self.chunks):
