@@ -28,6 +28,11 @@ class AnswerGenerator:
         self.base_url = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
         # 多轮对话记忆：session_id -> [(user_query, assistant_answer), ...]
         self.sessions = {}
+        # 回答缓存：query -> {answer, sources, compliance, timestamp}
+        self.cache = {}
+        self.cache_hits = 0
+        self.cache_misses = 0
+        self.cache_ttl = 300  # 缓存有效期（秒）
 
     def _get_history(self, session_id: str = None, max_rounds: int = 3) -> list:
         """获取会话历史（最近 max_rounds 轮）"""
@@ -235,8 +240,25 @@ class AnswerGenerator:
                     "query": query, "error": str(e)[:80]}
 
     def answer(self, query: str, top_k: int = 3, verbose: bool = False, session_id: str = None) -> dict:
-        """完整回答流程（支持多轮对话记忆：传入 session_id 可引用上文）"""
+        """完整回答流程（支持多轮对话记忆：传入 session_id 可引用上文）
+        带回答缓存：相同问题在 TTL 内二次回答直接走缓存
+        """
         t0 = time.time()
+
+        # 0. 回答缓存查找（非多轮场景才用缓存，多轮会话因上下文不同不缓存）
+        cache_key = query.strip() if not session_id else None
+        if cache_key and cache_key in self.cache:
+            cached = self.cache[cache_key]
+            # 检查 TTL 是否过期
+            if time.time() - cached["timestamp"] < self.cache_ttl:
+                self.cache_hits += 1
+                return {
+                    **cached["result"],
+                    "cache_hit": True,
+                    "elapsed_ms": round((time.time() - t0) * 1000, 1),
+                }
+        if cache_key:
+            self.cache_misses += 1
 
         # 1. 获取会话历史（多轮记忆）
         history = self._get_history(session_id)
@@ -297,7 +319,7 @@ class AnswerGenerator:
 
         elapsed = (time.time() - t0) * 1000
 
-        return {
+        result = {
             "query": query,
             "answer": answer_text,
             "sources": sources,
@@ -307,6 +329,15 @@ class AnswerGenerator:
             "needs_human": False,
             "elapsed_ms": round(elapsed, 1),
         }
+
+        # 9. 写入回答缓存（非多轮场景）
+        if cache_key:
+            self.cache[cache_key] = {
+                "result": result,
+                "timestamp": time.time(),
+            }
+
+        return result
 
 
 if __name__ == "__main__":
