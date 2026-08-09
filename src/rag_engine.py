@@ -85,18 +85,25 @@ class RAGEngine:
         return embeddings.numpy().astype(np.float32)
 
     def _tokenize(self, text):
-        """中文分词：单字 + 2-gram 组合（确保短词如"面霜"可匹配）"""
-        # 英文单词和数字单独提取
+        """中文分词：成分感知（优先词库词）+ 单字/2-gram/3-gram 兜底"""
+        # 使用成分词库分词器（领域词典优先）
+        try:
+            from ingredient_dict import IngredientTokenizer
+            tk = IngredientTokenizer()
+            return tk.tokenize(text)
+        except ImportError:
+            # 兜底：单字 + 2-gram + 3-gram
+            return self._tokenize_fallback(text)
+
+    @staticmethod
+    def _tokenize_fallback(text):
+        """兜底分词：单字 + 2-gram + 3-gram"""
         words = re.findall(r'[a-zA-Z0-9]+', text.lower())
-        # 中文连续串
         chinese_runs = re.findall(r'[\u4e00-\u9fff]+', text)
         tokens = words
         for run in chinese_runs:
-            # 单字
             tokens.extend(list(run))
-            # 2-gram
             tokens.extend(run[i:i+2] for i in range(len(run) - 1))
-            # 3-gram（关键成分词如"烟酰胺"）
             tokens.extend(run[i:i+3] for i in range(len(run) - 2))
         return tokens
 

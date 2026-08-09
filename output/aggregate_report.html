@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>美妆知识库系统 · 批量测试汇总报告</title>
+<style>
+  body { font-family: 'PingFang SC','Microsoft YaHei',sans-serif; background:#f5f7fa; margin:0; padding:30px; color:#333; }
+  .container { max-width:900px; margin:0 auto; }
+  h1 { text-align:center; color:#1a1a2e; }
+  .sub { text-align:center; color:#888; margin-bottom:30px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center; }
+  .value { font-size:2em; font-weight:700; }
+  .green .value { color:#16a34a; } .blue .value { color:#2563eb; }
+  .orange .value { color:#ea580c; } .purple .value { color:#7c3aed; }
+  .red .value { color:#dc2626; }
+  .label { color:#888; font-size:.9em; margin-top:4px; }
+  table { width:100%; border-collapse:collapse; margin-top:20px; background:#fff; border-radius:8px; overflow:hidden; }
+  th,td { padding:12px 16px; text-align:left; border-bottom:1px solid #eee; }
+  th { background:#f8f6f2; }
+  .section { background:#fff; border-radius:12px; padding:24px; box-shadow:0 2px 8px rgba(0,0,0,.06); margin-top:20px; }
+  .footer { text-align:center; color:#999; margin-top:30px; font-size:.85em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 美妆知识库系统 · 批量测试汇总报告</h1>
+  <p class="sub">生成时间：2026-08-09 22:56:43 | RalphLoop 第9轮</p>
+
+  <div class="cards">
+    <div class="card green"><div class="value">100.0%</div><div class="label">完整测试通过率</div></div>
+    <div class="card blue"><div class="value">65</div><div class="label">测试用例数</div></div>
+    <div class="card orange"><div class="value">25/25</div><div class="label">边界对抗测试</div></div>
+    <div class="card purple"><div class="value">9570.4ms</div><div class="label">平均响应延迟</div></div>
+    <div class="card green"><div class="value">1.0</div><div class="label">RAG忠实度</div></div>
+    <div class="card blue"><div class="value">60.0%</div><div class="label">缓存命中率</div></div>
+  </div>
+
+  <div class="section">
+    <h2>📋 各模块测试结果</h2>
+    <table>
+      <tr><th>模块</th><th>通过/总数</th><th>通过率</th></tr>
+      <tr><td>完整测试套件</td><td>65/65</td><td>100.0%</td></tr>
+      <tr><td>边界对抗测试</td><td>25/25</td><td>100.0%</td></tr>
+      <tr><td>输入校验</td><td colspan="2">8/8 = 100%</td></tr>
+      <tr><td>RAG Triad 综合</td><td colspan="2">1.0</td></tr>
+    </table>
+  </div>
+
+  <div class="footer">FDE 共学营大作业 · 美妆零售知识库 · RalphLoop 自动优化循环 v1.9</div>
+</div>
+</body>
+</html>

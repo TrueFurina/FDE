@@ -25,5 +25,34 @@
     "session_id": "s3",
     "sources": [],
     "comment": "回答太保守"
+  },
+  {
+    "timestamp": "2026-08-09 22:56:01",
+    "query": "这个回答太模糊了",
+    "answer": "建议先做局部测试，具体因人而异",
+    "feedback": "down",
+    "session_id": "s_opt1",
+    "sources": [
+      "03_使用方法指南.md"
+    ],
+    "comment": "回答不具体"
+  },
+  {
+    "timestamp": "2026-08-09 22:56:01",
+    "query": "烟酰胺有什么功效？",
+    "answer": "烟酰胺有助于提亮肤色",
+    "feedback": "up",
+    "session_id": "s_up1",
+    "sources": [],
+    "comment": ""
+  },
+  {
+    "timestamp": "2026-08-09 22:56:01",
+    "query": "这个回答太模糊了",
+    "answer": "再次回答",
+    "feedback": "down",
+    "session_id": "s_opt2",
+    "sources": [],
+    "comment": ""
   }
 ]
