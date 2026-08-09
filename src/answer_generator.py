@@ -7,6 +7,7 @@
 
 import os
 import time
+import json
 from pathlib import Path
 
 # 引入项目模块
@@ -28,17 +29,41 @@ class AnswerGenerator:
         self.base_url = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
         # 多轮对话记忆：session_id -> [(user_query, assistant_answer), ...]
         self.sessions = {}
+        self.sessions_file = Path(__file__).parent.parent / "output" / "sessions.json"
         # 回答缓存：query -> {answer, sources, compliance, timestamp}
         self.cache = {}
         self.cache_hits = 0
         self.cache_misses = 0
         self.cache_ttl = 300  # 缓存有效期（秒）
+        # 加载持久化会话（重启后可恢复）
+        self._load_sessions()
 
     def _get_history(self, session_id: str = None, max_rounds: int = 3) -> list:
         """获取会话历史（最近 max_rounds 轮）"""
         if not session_id or session_id not in self.sessions:
             return []
         return self.sessions[session_id][-max_rounds:]
+
+    # ===== 会话持久化 =====
+    def _save_sessions(self):
+        """保存会话记忆到文件"""
+        try:
+            self.sessions_file.parent.mkdir(exist_ok=True)
+            with open(self.sessions_file, "w", encoding="utf-8") as f:
+                json.dump(self.sessions, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+    def _load_sessions(self):
+        """从文件加载会话记忆（重启后可恢复）"""
+        try:
+            if self.sessions_file.exists():
+                with open(self.sessions_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                if isinstance(data, dict):
+                    self.sessions = data
+        except (json.JSONDecodeError, FileNotFoundError):
+            self.sessions = {}
 
     def _remember(self, session_id: str, query: str, answer: str, max_total: int = 10):
         """记录对话到会话记忆"""
@@ -50,6 +75,8 @@ class AnswerGenerator:
         # 限制会话长度，防止无限增长
         if len(self.sessions[session_id]) > max_total:
             self.sessions[session_id] = self.sessions[session_id][-max_total:]
+        # 持久化保存
+        self._save_sessions()
 
     # ===== 会话历史管理 =====
     def list_sessions(self) -> list:
