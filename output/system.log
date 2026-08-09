@@ -1,0 +1,5 @@
+2026-08-10 00:32:13,462|INFO|QUERY|{"type": "query", "query": "烟酰胺有什么功效？", "session_id": "s1", "elapsed_ms": 1200, "intent": "成分功效", "result": "ok"}
+2026-08-10 00:32:13,462|INFO|QUERY|{"type": "query", "query": "这款面霜多少钱？", "session_id": "s2", "elapsed_ms": 800, "intent": "产品咨询", "result": "ok"}
+2026-08-10 00:32:13,462|INFO|FEEDBACK|{"type": "feedback", "query": "烟酰胺有什么功效？", "feedback": "up", "session_id": "s1"}
+2026-08-10 00:32:13,462|INFO|INFO|{"type": "event", "event": "system_start", "version": "v2.1"}
+2026-08-10 00:32:13,462|ERROR|ERROR|{"type": "error", "component": "llm_api", "error": "连接超时"}
