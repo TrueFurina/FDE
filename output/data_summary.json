@@ -1,0 +1,17 @@
+{
+  "test": {
+    "total": 59,
+    "passed": 59,
+    "pass_rate": 100.0
+  },
+  "boundary": {
+    "total": 25,
+    "passed": 25
+  },
+  "triad": {
+    "context_relevance": 1.0,
+    "groundedness": 1.0,
+    "answer_relevance": 1.0
+  },
+  "exported_at": "2026-08-09 17:48:21"
+}

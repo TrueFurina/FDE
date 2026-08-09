@@ -46,6 +46,37 @@ class AnswerGenerator:
         if len(self.sessions[session_id]) > max_total:
             self.sessions[session_id] = self.sessions[session_id][-max_total:]
 
+    # ===== 会话历史管理 =====
+    def list_sessions(self) -> list:
+        """列出所有会话及轮数"""
+        return [
+            {"session_id": sid, "rounds": len(history),
+             "last_query": history[-1][0][:50] if history else ""}
+            for sid, history in self.sessions.items()
+        ]
+
+    def clear_session(self, session_id: str) -> bool:
+        """清除指定会话"""
+        if session_id in self.sessions:
+            del self.sessions[session_id]
+            return True
+        return False
+
+    def clear_all_sessions(self) -> int:
+        """清除所有会话，返回清除数量"""
+        count = len(self.sessions)
+        self.sessions.clear()
+        return count
+
+    def session_stats(self) -> dict:
+        """会话统计"""
+        total_rounds = sum(len(h) for h in self.sessions.values())
+        return {
+            "total_sessions": len(self.sessions),
+            "total_rounds": total_rounds,
+            "avg_rounds": round(total_rounds / len(self.sessions), 1) if self.sessions else 0,
+        }
+
     def _call_llm(self, query: str, context: list, history: list = None) -> str:
         """调用 DeepSeek API 生成回答"""
         from openai import OpenAI

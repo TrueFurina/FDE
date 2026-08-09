@@ -1,0 +1,60 @@
+{
+  "total_queries": 8,
+  "success_queries": 8,
+  "avg_ms": 4460.3,
+  "median_ms": 3597.2,
+  "max_ms": 10170.7,
+  "min_ms": 2873.3,
+  "p90_ms": 4852.0,
+  "p95_ms": 4852.0,
+  "per_query": [
+    {
+      "query": "烟酰胺有什么功效？",
+      "latency_ms": 10170.7,
+      "intent": "成分功效",
+      "has_answer": true
+    },
+    {
+      "query": "敏感肌可以用视黄醇吗？",
+      "latency_ms": 4852.0,
+      "intent": "成分功效",
+      "has_answer": true
+    },
+    {
+      "query": "这款面霜多少钱？",
+      "latency_ms": 2873.3,
+      "intent": "产品咨询",
+      "has_answer": true
+    },
+    {
+      "query": "拆封了还能退货吗？",
+      "latency_ms": 3432.8,
+      "intent": "售后规则",
+      "has_answer": true
+    },
+    {
+      "query": "玻尿酸精华怎么用？",
+      "latency_ms": 4037.1,
+      "intent": "使用方法",
+      "has_answer": true
+    },
+    {
+      "query": "孕妇可以用水杨酸吗？",
+      "latency_ms": 3623.5,
+      "intent": "成分功效",
+      "has_answer": true
+    },
+    {
+      "query": "退货多久能收到退款？",
+      "latency_ms": 3122.3,
+      "intent": "售后规则",
+      "has_answer": true
+    },
+    {
+      "query": "防晒霜需要每天用吗？",
+      "latency_ms": 3570.8,
+      "intent": "使用方法",
+      "has_answer": true
+    }
+  ]
+}
