@@ -46,6 +46,7 @@ def get_agent():
 class QueryRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=500, description="用户问题")
     top_k: int = Field(3, ge=1, le=10, description="检索返回条数")
+    session_id: str = Field(None, max_length=64, description="会话ID（多轮对话记忆，传入相同ID可引用上文）")
 
 
 class ComplianceRequest(BaseModel):
@@ -58,11 +59,13 @@ class ComplianceRequest(BaseModel):
 def root():
     return {
         "service": "美妆零售知识库",
-        "version": "1.0.0",
+        "version": "1.2.0",
         "endpoints": [
             "GET  /health",
             "POST /api/answer",
             "POST /api/compliance",
+            "GET  /api/intent",
+            "GET  /api/search",
         ]
     }
 
@@ -74,10 +77,10 @@ def health():
 
 @app.post("/api/answer")
 def answer(req: QueryRequest):
-    """核心问答接口：意图识别 → 检索 → 生成 → 合规 → Grounding"""
+    """核心问答接口：意图识别 → 检索 → 生成 → 合规 → Grounding（支持多轮记忆）"""
     try:
         agent = get_agent()
-        result = agent.answer(req.query, top_k=req.top_k)
+        result = agent.answer(req.query, top_k=req.top_k, session_id=req.session_id)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"处理失败: {str(e)}")

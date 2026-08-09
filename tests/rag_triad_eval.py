@@ -85,8 +85,11 @@ class RAGTriadEvaluator:
             result = self.agent.answer(q)
             contexts = result["sources"]
 
-            # 维度2：忠实度
-            grounded = self.score_groundedness(q, result["answer"], result["sources"])
+            # 关键修复：评估忠实度用完整检索上下文（sources 文本被截断为100字符会导致误判）
+            full_contexts = self.agent.rag.hybrid_search(q, top_k=3)
+
+            # 维度2：忠实度（用完整上下文评估）
+            grounded = self.score_groundedness(q, result["answer"], full_contexts)
             # 维度3：相关性
             relevant = self.score_answer_relevance(q, result["answer"])
 

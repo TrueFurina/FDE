@@ -26,8 +26,27 @@ class AnswerGenerator:
         self.checker = ComplianceChecker()
         self.api_key = os.environ.get("DEEPSEEK_API_KEY", "")
         self.base_url = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+        # 多轮对话记忆：session_id -> [(user_query, assistant_answer), ...]
+        self.sessions = {}
 
-    def _call_llm(self, query: str, context: list) -> str:
+    def _get_history(self, session_id: str = None, max_rounds: int = 3) -> list:
+        """获取会话历史（最近 max_rounds 轮）"""
+        if not session_id or session_id not in self.sessions:
+            return []
+        return self.sessions[session_id][-max_rounds:]
+
+    def _remember(self, session_id: str, query: str, answer: str, max_total: int = 10):
+        """记录对话到会话记忆"""
+        if not session_id:
+            return
+        if session_id not in self.sessions:
+            self.sessions[session_id] = []
+        self.sessions[session_id].append((query, answer))
+        # 限制会话长度，防止无限增长
+        if len(self.sessions[session_id]) > max_total:
+            self.sessions[session_id] = self.sessions[session_id][-max_total:]
+
+    def _call_llm(self, query: str, context: list, history: list = None) -> str:
         """调用 DeepSeek API 生成回答"""
         from openai import OpenAI
 
@@ -47,9 +66,21 @@ class AnswerGenerator:
 4. 如资料不足，明确说明"根据现有资料无法确认"
 5. 涉及医疗诊断、绝对功效承诺时，改为建议性表述并提示咨询专业人士
 6. 回答控制在150字以内
-7. 【合规措辞】描述成分/产品功效时必须使用温和表述：用"有助于改善""帮助提亮""辅助焕亮""帮助舒缓"等，禁止使用"美白""祛斑""祛皱""治疗""治愈""根治""100%""绝对""保证"等敏感词；如资料中成分确有相关功效，用"有助于"引导的客观描述，而非效果承诺"""
+7. 【合规措辞】描述成分/产品功效时必须使用温和表述：用"有助于改善""帮助提亮""辅助焕亮""帮助舒缓"等，禁止使用"美白""祛斑""祛皱""治疗""治愈""根治""100%""绝对""保证"等敏感词；如资料中成分确有相关功效，用"有助于"引导的客观描述，而非效果承诺
+8. 【严格忠实】只陈述资料中明确写出的内容，逐条对应资料来源；禁止做资料之外的推断、联想或总结性判断（如"机制不同""无法比较"这类资料未写的结论）；禁止把成分A的特征安到成分B上；如果资料没有直接给出答案，如实说"资料中未明确说明"，不要自行补充"""
 
+        # 构建消息序列（含历史）
+        messages = [{"role": "system", "content": system_prompt}]
+
+        # 注入历史对话（多轮记忆）
+        if history:
+            for h_query, h_answer in history:
+                messages.append({"role": "user", "content": h_query})
+                messages.append({"role": "assistant", "content": h_answer[:300]})
+
+        # 当前问题 + 参考资料
         user_prompt = f"客户问题：{query}\n\n参考资料：\n{context_text}"
+        messages.append({"role": "user", "content": user_prompt})
 
         try:
             response = client.chat.completions.create(
@@ -165,20 +196,25 @@ class AnswerGenerator:
                     "hallucinated_claims": [], "verdict": "partial",
                     "query": query, "error": str(e)[:80]}
 
-    def answer(self, query: str, top_k: int = 3, verbose: bool = False) -> dict:
-        """完整回答流程"""
+    def answer(self, query: str, top_k: int = 3, verbose: bool = False, session_id: str = None) -> dict:
+        """完整回答流程（支持多轮对话记忆：传入 session_id 可引用上文）"""
         t0 = time.time()
 
-        # 1. 意图识别
+        # 1. 获取会话历史（多轮记忆）
+        history = self._get_history(session_id)
+
+        # 2. 意图识别
         intent_result = self.router.route(query)
 
-        # 2. 高风险直接转人工
+        # 3. 高风险直接转人工
         if intent_result["route"] == "human":
             elapsed = (time.time() - t0) * 1000
+            answer_text = ("检测到高风险问题（不良反应/医疗相关），已为您转接人工客服处理。"
+                           "请立即停止使用产品，如有严重不适请及时就医。")
+            self._remember(session_id, query, answer_text)
             return {
                 "query": query,
-                "answer": "检测到高风险问题（不良反应/医疗相关），已为您转接人工客服处理。"
-                          "请立即停止使用产品，如有严重不适请及时就医。",
+                "answer": answer_text,
                 "sources": [],
                 "compliance": {"verdict": "human", "reason": "高风险问题，转人工处理", "violated_rules": []},
                 "intent": intent_result,
@@ -186,14 +222,16 @@ class AnswerGenerator:
                 "elapsed_ms": round(elapsed, 1),
             }
 
-        # 3. RAG 混合检索（带查询重写+重试）
+        # 4. RAG 混合检索（带查询重写+重试）
         contexts = self._retrieve_with_rewrite(query, top_k=top_k)
 
         if not contexts:
             elapsed = (time.time() - t0) * 1000
+            answer_text = "抱歉，根据现有知识库无法找到相关信息，建议您咨询人工客服。"
+            self._remember(session_id, query, answer_text)
             return {
                 "query": query,
-                "answer": "抱歉，根据现有知识库无法找到相关信息，建议您咨询人工客服。",
+                "answer": answer_text,
                 "sources": [],
                 "compliance": {"verdict": "pass", "reason": "无检索结果", "violated_rules": []},
                 "intent": intent_result,
@@ -201,14 +239,17 @@ class AnswerGenerator:
                 "elapsed_ms": round(elapsed, 1),
             }
 
-        # 4. 生成回答
-        answer_text = self._call_llm(query, contexts)
+        # 5. 生成回答（传入历史，支持多轮引用）
+        answer_text = self._call_llm(query, contexts, history=history)
 
-        # 5. Grounding 护栏：LLM 校验回答是否基于检索资料（防幻觉）
+        # 6. Grounding 护栏：LLM 校验回答是否基于检索资料（防幻觉）
         grounding = self._grounding_check(query, answer_text, contexts)
 
-        # 6. 合规检查
+        # 7. 合规检查
         compliance = self.checker.check(answer_text)
+
+        # 8. 记录到会话记忆
+        self._remember(session_id, query, answer_text)
 
         # 6. 组装来源
         sources = [

@@ -142,6 +142,53 @@ TEST_CASES = [
         "expected_verdict": "pass",
         "expect_answer": True,
     },
+
+    # ---- 第2轮新增：新产品/成分端到端测试 ----
+    {
+        "id": "E01",
+        "category": "正常",
+        "type": "新产品-眼霜",
+        "query": "咖啡因眼霜有什么功效？",
+        "expected_intent": "ingredient",
+        "expected_verdict": "pass",
+        "expect_answer": True,
+    },
+    {
+        "id": "E02",
+        "category": "正常",
+        "type": "新成分-尿素",
+        "query": "尿素对身体皮肤有什么作用？",
+        "expected_intent": "ingredient",
+        "expected_verdict": "pass",
+        "expect_answer": True,
+    },
+    {
+        "id": "E03",
+        "category": "正常",
+        "type": "新产品-防晒",
+        "query": "敏感肌适合用哪款防晒霜？",
+        "expected_intent": "product",
+        "expected_verdict": "pass",
+        "expect_answer": True,
+    },
+    {
+        "id": "E04",
+        "category": "边界",
+        "type": "新成分-果酸",
+        "query": "果酸和视黄醇能一起用吗？",
+        "expected_intent": "ingredient",
+        "expected_verdict": "pass",
+        "expect_answer": True,
+    },
+    {
+        "id": "E05",
+        "category": "正常",
+        "type": "新产品-身体乳",
+        "query": "烟酰胺身体乳和精华有什么区别？",
+        "expected_intent": "ingredient",
+        "expected_verdict": "pass",
+        "expect_answer": True,
+    },
 ]
 
 
