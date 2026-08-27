@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-10 00:13:59",
-  "elapsed_ms": 285.5,
+  "generated_at": "2026-08-27 20:35:26",
+  "elapsed_ms": 269.2,
   "summary": {
     "ok": 10,
     "warn": 0,
@@ -11,17 +11,17 @@
     {
       "component": "数据-chunks.json",
       "status": "ok",
-      "detail": "存在 (20235 字节)"
+      "detail": "存在 (21652 字节)"
     },
     {
       "component": "数据-faiss_index.bin",
       "status": "ok",
-      "detail": "存在 (67629 字节)"
+      "detail": "存在 (73773 字节)"
     },
     {
       "component": "数据-bm25_index.pkl",
       "status": "ok",
-      "detail": "存在 (42502 字节)"
+      "detail": "存在 (161930 字节)"
     },
     {
       "component": "数据-embedding_info.json",
@@ -31,12 +31,12 @@
     {
       "component": "知识文档",
       "status": "ok",
-      "detail": "4 篇"
+      "detail": "5 篇"
     },
     {
       "component": "RAG索引",
       "status": "ok",
-      "detail": "FAISS 44 向量"
+      "detail": "FAISS 48 向量"
     },
     {
       "component": "LLM配置",
@@ -51,7 +51,7 @@
     {
       "component": "反馈数据",
       "status": "ok",
-      "detail": "6 条反馈"
+      "detail": "11 条反馈"
     },
     {
       "component": "输出报告",

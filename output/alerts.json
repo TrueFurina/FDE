@@ -10,5 +10,17 @@
       "连接超时 #3"
     ],
     "level": "ALERT"
+  },
+  {
+    "timestamp": "2026-08-27 20:35:26",
+    "component": "llm_api",
+    "error_count": 3,
+    "window_seconds": 60,
+    "recent_errors": [
+      "连接超时 #1",
+      "连接超时 #2",
+      "连接超时 #3"
+    ],
+    "level": "ALERT"
   }
 ]
