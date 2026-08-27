@@ -1,0 +1,18 @@
+{
+  "config": {
+    "concurrency": 3,
+    "requests_per_worker": 2,
+    "total_requests": 0
+  },
+  "metrics": {
+    "total_time_seconds": 0.06,
+    "requests_per_second": 0.0,
+    "success_rate": 0,
+    "avg_duration_ms": 0,
+    "median_duration_ms": 0,
+    "max_duration_ms": 0,
+    "min_duration_ms": 0,
+    "p90_duration_ms": 0
+  },
+  "results": []
+}

@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-08-27 16:44:21",
+  "total": 4,
+  "by_priority": {
+    "high": 3,
+    "medium": 1,
+    "low": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "category": "反馈驱动",
+      "suggestion": "存在 4 条点踩反馈，建议优先优化: ['这个回答太模糊了', '这个回答太模糊了', '敏感肌可以用视黄醇吗？']"
+    },
+    {
+      "priority": "high",
+      "category": "待优化区",
+      "suggestion": "知识库待优化区有 2 个问题待处理: ['这个回答太模糊了', '敏感肌可以用视黄醇吗？']"
+    },
+    {
+      "priority": "high",
+      "category": "索引健康",
+      "suggestion": "索引加载失败: No module named 'numpy'，建议检查并重建"
+    },
+    {
+      "priority": "medium",
+      "category": "文档深度",
+      "suggestion": "以下文档内容偏少（<1KB），建议补充细节: ['05_新品测试文档.md']"
+    }
+  ]
+}
