@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-08-27 20:27:33",
+  "hot_queries": [
+    "烟酰胺有什么功效？",
+    "这款面霜多少钱？",
+    "敏感肌可以用视黄醇吗？",
+    "玻尿酸精华怎么用？",
+    "退货流程是什么？"
+  ],
+  "before": {
+    "cache_hits": 0,
+    "cache_misses": 5,
+    "hit_rate": 0.0
+  },
+  "after": {
+    "cache_hits": 5,
+    "cache_misses": 0,
+    "hit_rate": 1.0,
+    "hit_rate_percent": 100.0
+  },
+  "warmed": 5
+}

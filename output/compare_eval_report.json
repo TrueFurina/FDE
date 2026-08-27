@@ -1,0 +1,142 @@
+{
+  "generated_at": "2026-08-27 20:28:30",
+  "total": 4,
+  "results": [
+    {
+      "query": "烟酰胺有什么功效？",
+      "version_a": {
+        "answer_preview": "根据现有资料，烟酰胺的功效为：控油、提亮、修护屏障，适用于油性、混合性肤质（资料C）。初次使用可能出现不耐受，建议从低浓度开始（资料C）。资料中未明确说明其他功效，如需进一步了解，建议咨询专业人士。",
+        "length": 99,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "version_b": {
+        "answer_preview": "根据现有资料，烟酰胺的功效为：控油、提亮、修护屏障，适用于油性、混合性肤质（资料C）。初次使用可能出现不耐受，建议从低浓度开始（资料C）。资料中未明确说明其他功效，如需进一步了解，建议咨询专业人士。",
+        "length": 99,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "winner": "平局",
+      "dimensions": {
+        "faithfulness": {
+          "A": true,
+          "B": true
+        },
+        "compliance": {
+          "A": "pass",
+          "B": "pass"
+        },
+        "completeness": {
+          "A": 3,
+          "B": 3
+        }
+      }
+    },
+    {
+      "query": "敏感肌可以用视黄醇吗？",
+      "version_a": {
+        "answer_preview": "敏感肌可以使用视黄醇，但需要特别注意建立耐受。建议从每周2-3次的低频次开始使用（资料A）。如果使用过程中出现刺痛、发红等不适，应立即停用并咨询专业人士（资料A）。同时，使用视黄醇期间需做好防晒（资料B）。由于敏感肌个体差异较大，建议首次使",
+        "length": 181,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "version_b": {
+        "answer_preview": "敏感肌可以使用视黄醇，但需要特别注意建立耐受。建议从每周2-3次的低频次开始使用（资料A）。如果使用过程中出现刺痛、发红等不适，应立即停用并咨询专业人士（资料A）。同时，使用视黄醇期间需做好防晒（资料B）。由于敏感肌个体差异较大，建议首次使",
+        "length": 181,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "winner": "平局",
+      "dimensions": {
+        "faithfulness": {
+          "A": true,
+          "B": true
+        },
+        "compliance": {
+          "A": "pass",
+          "B": "pass"
+        },
+        "completeness": {
+          "A": 3,
+          "B": 3
+        }
+      }
+    },
+    {
+      "query": "这款面霜多少钱？",
+      "version_a": {
+        "answer_preview": "您好，关于您询问的这款面霜价格，根据现有资料无法确认具体售价（资料A、B、C均未包含价格信息）。建议您查看商品详情页或联系在线客服获取最新报价。如果您有其他关于产品使用或售后的问题，我很乐意协助您。",
+        "length": 99,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "version_b": {
+        "answer_preview": "您好，关于您询问的这款面霜价格，根据现有资料无法确认具体售价（资料A、B、C均未包含价格信息）。建议您查看商品详情页或联系在线客服获取最新报价。如果您有其他关于产品使用或售后的问题，我很乐意协助您。",
+        "length": 99,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "winner": "平局",
+      "dimensions": {
+        "faithfulness": {
+          "A": true,
+          "B": true
+        },
+        "compliance": {
+          "A": "pass",
+          "B": "pass"
+        },
+        "completeness": {
+          "A": 3,
+          "B": 3
+        }
+      }
+    },
+    {
+      "query": "退货流程是什么？",
+      "version_a": {
+        "answer_preview": "您好，关于退货流程，具体步骤如下（资料A）：\n1. 联系客服说明退换货原因；\n2. 提供订单号、商品照片（如质量问题）；\n3. 客服核实是否符合政策；\n4. 确认后提供退货地址；\n5. 买家寄回商品（附订单信息纸条）；\n6. 仓库验收后处理",
+        "length": 252,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "version_b": {
+        "answer_preview": "您好，关于退货流程，具体步骤如下（资料A）：\n1. 联系客服说明退换货原因；\n2. 提供订单号、商品照片（如质量问题）；\n3. 客服核实是否符合政策；\n4. 确认后提供退货地址；\n5. 买家寄回商品（附订单信息纸条）；\n6. 仓库验收后处理",
+        "length": 252,
+        "sources": 3,
+        "compliance": "pass",
+        "grounded": true,
+        "score": 1.0
+      },
+      "winner": "平局",
+      "dimensions": {
+        "faithfulness": {
+          "A": true,
+          "B": true
+        },
+        "compliance": {
+          "A": "pass",
+          "B": "pass"
+        },
+        "completeness": {
+          "A": 3,
+          "B": 3
+        }
+      }
+    }
+  ]
+}

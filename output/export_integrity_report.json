@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-08-27 20:25:59",
+  "summary": {
+    "ok": 16,
+    "fail": 0,
+    "overall": "complete"
+  },
+  "checks": [
+    {
+      "check": "完整-sessions_export.json",
+      "status": "ok",
+      "detail": "8 条记录"
+    },
+    {
+      "check": "结构-sessions_export.md",
+      "status": "ok",
+      "detail": "12371 字符, 标题存在"
+    },
+    {
+      "check": "字段-qa_pairs.json",
+      "status": "ok",
+      "detail": "全部完整"
+    },
+    {
+      "check": "完整-qa_pairs.json",
+      "status": "ok",
+      "detail": "4 条记录"
+    },
+    {
+      "check": "表头-qa_pairs.csv",
+      "status": "ok",
+      "detail": "缺失列: 无"
+    },
+    {
+      "check": "完整-qa_pairs.csv",
+      "status": "ok",
+      "detail": "4 行"
+    },
+    {
+      "check": "字段-feedback.json",
+      "status": "ok",
+      "detail": "全部完整"
+    },
+    {
+      "check": "完整-feedback.json",
+      "status": "ok",
+      "detail": "11 条记录"
+    },
+    {
+      "check": "字段-test_report.json",
+      "status": "ok",
+      "detail": "缺失字段: 无"
+    },
+    {
+      "check": "完整-test_report.json",
+      "status": "ok",
+      "detail": "6 条记录"
+    },
+    {
+      "check": "字段-boundary_test_report.json",
+      "status": "ok",
+      "detail": "缺失字段: 无"
+    },
+    {
+      "check": "完整-boundary_test_report.json",
+      "status": "ok",
+      "detail": "3 条记录"
+    },
+    {
+      "check": "完整-cache_stats.json",
+      "status": "ok",
+      "detail": "9 条记录"
+    },
+    {
+      "check": "字段-health_report.json",
+      "status": "ok",
+      "detail": "缺失字段: 无"
+    },
+    {
+      "check": "完整-health_report.json",
+      "status": "ok",
+      "detail": "4 条记录"
+    },
+    {
+      "check": "完整-metrics_report.json",
+      "status": "ok",
+      "detail": "6 条记录"
+    }
+  ]
+}
