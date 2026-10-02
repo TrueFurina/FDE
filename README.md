@@ -1,107 +1,109 @@
-# 美妆零售知识库与客服协作系统
+# Beauty-Retail Knowledge Base & Customer-Service Collaboration System
 
-> FDE 共学营大作业 | 美妆零售 AI 知识库与客服辅助系统
-> 基于 RAG 混合检索 + 意图路由 + 合规风控 + Grounding 防幻觉
+[English](./README.md) | [中文](./README.zh.md)
 
-## 📋 项目简介
+> FDE Co-learning Camp capstone project | Beauty-retail AI knowledge base & customer-service assistant
+> Built on RAG hybrid retrieval + intent routing + compliance guardrails + grounding anti-hallucination
 
-为美妆零售企业客服/导购构建 AI 辅助系统，解决知识分散、查找耗时、口径不一、合规风险等问题。
+## 📋 Project Overview
 
-**定义的真问题：** 将新客服培养成资深员工水平的时间从 2-4 周缩短到 1 周以内，确保回复口径一致、合规、可追溯。
+An AI assistant system for customer service and sales staff at beauty-retail businesses, addressing scattered knowledge, time-consuming lookups, inconsistent answers, and compliance risks.
 
-## 🏗️ 系统架构
+**The real problem it targets:** cut the time to train a new agent to a veteran level from 2–4 weeks down to under 1 week, with consistent, compliant, and traceable replies.
 
-```
-用户咨询
-  ↓
-意图识别与路由（6类意图 + 高风险转人工）
-  ↓
-RAG 混合检索（FAISS向量 + BM25关键词 + RRF融合）
-  ↓
-查询重写+重试（检索质量低时自动改写）
-  ↓
-答案生成（DeepSeek LLM + 来源标注）
-  ↓
-合规风控（医疗/承诺/越界/暗示检测）
-  ↓
-Grounding 护栏（LLM 防幻觉校验）
-  ↓
-输出：答案 + 来源 + 合规状态 + 转人工标记
-```
-
-## 📁 目录结构
+## 🏗️ System Architecture
 
 ```
-├── data/          # 知识库数据（产品/成分/用法/售后）
-├── src/           # 核心源码
-│   ├── rag_engine.py      # RAG 混合检索引擎（FAISS+BM25+RRF）
-│   ├── intent_router.py   # 意图识别与路由（6类+转人工）
-│   ├── answer_generator.py # 答案生成（LLM+来源+Grounding+查询重写）
-│   ├── api_server.py      # FastAPI 接口层
-│   ├── app.py             # Streamlit Web 界面
-│   └── config.py          # 统一配置
-├── skills/        # Skill 定义
-│   └── compliance_check.py # 合规风控 Skill
-├── tests/         # 测试
-│   ├── run_tests.py       # 完整测试套件（30项）
-│   └── rag_triad_eval.py  # RAG Triad 评估
-├── scripts/       # 辅助脚本
-│   ├── build_index.py     # 知识库向量化（标题感知分块）
-│   └── upload_github.py   # GitHub 上传
-├── docs/          # 项目文档
+User question
+  ↓
+Intent recognition & routing (6 intent classes + high-risk human handoff)
+  ↓
+RAG hybrid retrieval (FAISS vectors + BM25 keywords + RRF fusion)
+  ↓
+Query rewriting + retry (auto rewrites when retrieval quality is low)
+  ↓
+Answer generation (DeepSeek LLM + source citations)
+  ↓
+Compliance guardrails (medical / promise / out-of-scope / implication detection)
+  ↓
+Grounding guardrail (LLM anti-hallucination verification)
+  ↓
+Output: answer + sources + compliance status + human-handoff flag
+```
+
+## 📁 Directory Structure
+
+```
+├── data/          # Knowledge base data (products / ingredients / usage / after-sales)
+├── src/           # Core source
+│   ├── rag_engine.py      # RAG hybrid retrieval engine (FAISS + BM25 + RRF)
+│   ├── intent_router.py   # Intent recognition & routing (6 classes + human handoff)
+│   ├── answer_generator.py # Answer generation (LLM + sources + grounding + query rewrite)
+│   ├── api_server.py      # FastAPI interface layer
+│   ├── app.py             # Streamlit web UI
+│   └── config.py          # Unified configuration
+├── skills/        # Skill definitions
+│   └── compliance_check.py # Compliance guardrail skill
+├── tests/         # Tests
+│   ├── run_tests.py       # Full test suite (30 items)
+│   └── rag_triad_eval.py  # RAG Triad evaluation
+├── scripts/       # Helper scripts
+│   ├── build_index.py     # Knowledge base vectorization (title-aware chunking)
+│   └── upload_github.py   # GitHub upload
+├── docs/          # Project documents
 │   ├── SOW工作说明书.md
 │   ├── 最终交付报告.md
 │   └── 需求拆解与排期文档.md
-└── output/        # 输出（测试报告等）
+└── output/        # Outputs (test reports, etc.)
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
 ```bash
-# 1. 安装依赖
+# 1. Install dependencies
 pip install faiss-cpu rank-bm25 streamlit fastapi openai sentence-transformers
 
-# 2. 构建知识库索引（首次）
+# 2. Build the knowledge-base index (first run)
 python scripts/build_index.py
 
-# 3. 启动 Web 演示
+# 3. Launch the web demo
 streamlit run src/app.py
 
-# 4. 启动 API 服务
+# 4. Start the API service
 python src/api_server.py
-# 访问 http://localhost:8502/docs 查看 API 文档
+# Visit http://localhost:8502/docs for the API docs
 
-# 5. 运行测试
+# 5. Run tests
 python tests/run_tests.py
 python tests/rag_triad_eval.py
 ```
 
-## 📊 测试结果
+## 📊 Test Results
 
-| 模块 | 通过率 |
-|------|--------|
-| 意图识别 | 13/13 = 100% |
-| 合规风控 | 7/7 = 100% |
-| RAG 检索 | 4/5 = 80% |
-| 端到端回答 | 5/5 = 100% |
-| **总体** | **96.7%** |
+| Module | Pass rate |
+|--------|-----------|
+| Intent recognition | 13/13 = 100% |
+| Compliance guardrails | 7/7 = 100% |
+| RAG retrieval | 4/5 = 80% |
+| End-to-end answers | 5/5 = 100% |
+| **Overall** | **96.7%** |
 
-## 🧠 核心能力
+## 🧠 Core Capabilities
 
-1. **混合检索 RRF 融合**：FAISS 语义 + BM25 关键词 + RRF 排序
-2. **意图识别路由**：6 类意图 + 高风险自动转人工
-3. **合规风控**：医疗诊断/绝对承诺/功效越界/医疗暗示检测
-4. **标题感知分块**：按 Markdown 标题切块，带标题路径上下文
-5. **查询重写+重试**：检索质量低时 LLM 改写重试
-6. **Grounding 护栏**：LLM 校验回答基于检索资料（防幻觉）
-7. **RAG Triad 评估**：上下文相关性/回答忠实度/答案相关性
-8. **API 接口层**：FastAPI 暴露 REST API，便于企业集成
+1. **Hybrid retrieval with RRF fusion**: FAISS semantic + BM25 keyword search + RRF ranking
+2. **Intent recognition & routing**: 6 intent classes + automatic human handoff for high-risk cases
+3. **Compliance guardrails**: medical diagnosis / absolute promises / efficacy overreach / medical implication detection
+4. **Title-aware chunking**: Markdown-header-based chunks with heading-path context
+5. **Query rewrite + retry**: LLM rewrites and retries when retrieval quality is low
+6. **Grounding guardrail**: LLM verifies answers are grounded in retrieved material (anti-hallucination)
+7. **RAG Triad evaluation**: context relevance / answer faithfulness / answer relevance
+8. **API layer**: FastAPI exposes a REST API for enterprise integration
 
-## 📝 项目文档
+## 📝 Project Documents
 
-- [SOW 工作说明书](docs/SOW工作说明书.md)
-- [最终交付报告](docs/最终交付报告.md)
-- [需求拆解与排期文档](docs/需求拆解与排期文档.md)
+- [SOW (statement of work)](docs/SOW工作说明书.md)
+- [Final delivery report](docs/最终交付报告.md)
+- [Requirements breakdown & schedule](docs/需求拆解与排期文档.md)
 
 ## 📄 License
 
