@@ -356,6 +356,27 @@ def run_test_suite():
     results["pass"] += reg_pass
     results["fail"] += len(regression) - reg_pass
 
+    # 1c. 回归：同义词重叠键（长词优先，2026-11-02）
+    # "维a醇" 曾先被短词 "a醇" 命中 -> "维视黄醇"；"泛醇b5" 先被 "b5" 命中 -> "泛醇泛醇"。
+    from synonym_expander import SynonymExpander
+    se = SynonymExpander()
+    syn_cases = [
+        ("维a醇", "视黄醇"),
+        ("泛醇b5", "泛醇"),
+        ("玻尿酸", "透明质酸"),
+        ("维C", "维生素C"),
+    ]
+    syn_pass = 0
+    print("\n  [回归] 同义词重叠键（长词优先）")
+    for q, expected in syn_cases:
+        got = se.normalize(q)
+        ok = got == expected
+        syn_pass += ok
+        print(f"  {'✅' if ok else '❌'} normalize({q!r}) 预期:{expected} 实际:{got}")
+    results["total"] += len(syn_cases)
+    results["pass"] += syn_pass
+    results["fail"] += len(syn_cases) - syn_pass
+
     # ---- 2. 合规检查测试 ----
     print("\n" + "=" * 70)
     print("  二、合规风控测试")

@@ -5,6 +5,8 @@
 集成：RAG 引擎查询前调用 query_expand()
 """
 
+import re
+
 # 同义词映射（别名 → 标准词）
 SYNONYMS = {
     # 成分同义词
@@ -73,24 +75,34 @@ class SynonymExpander:
 
     def __init__(self, synonyms=None):
         self.synonyms = synonyms or SYNONYMS
+        # 长词优先：否则 "维a醇" 会先被短词 "a醇" 命中（得到 "维视黄醇"），
+        # "泛醇b5" 会先被 "b5" 命中（得到 "泛醇泛醇"）。单次 sub 不会回头重扫
+        # 已替换的片段，避免把扩展出的标准词再次替换。
+        aliases = sorted(self.synonyms, key=len, reverse=True)
+        self._re = (re.compile("|".join(re.escape(a) for a in aliases))
+                    if aliases else None)
 
     def expand(self, query: str) -> str:
         """把查询中的同义词替换为标准词（同时保留原词以提升召回）"""
-        expanded = query
-        # 替换为带标准词的扩展形式（保留原词）
-        for alias, standard in self.synonyms.items():
-            if alias in expanded and standard != alias:
-                # 只替换一次，避免重复
-                expanded = expanded.replace(alias, f"{alias} {standard}", 1)
-        return expanded
+        if not self._re:
+            return query
+
+        def repl(m):
+            alias = m.group(0)
+            standard = self.synonyms[alias]
+            return alias if standard == alias else f"{alias} {standard}"
+
+        return self._re.sub(repl, query)
 
     def normalize(self, query: str) -> str:
         """纯归一化：把同义词替换为标准词（用于检索打分）"""
-        normalized = query
-        for alias, standard in self.synonyms.items():
-            if alias in normalized and standard != alias:
-                normalized = normalized.replace(alias, standard)
-        return normalized
+        if not self._re:
+            return query
+
+        def repl(m):
+            return self.synonyms[m.group(0)]
+
+        return self._re.sub(repl, query)
 
     def expand_for_search(self, query: str) -> list:
         """返回多个查询变体（原查询 + 扩展查询 + 归一化查询），供检索融合"""
