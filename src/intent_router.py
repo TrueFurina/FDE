@@ -71,10 +71,14 @@ USAGE_KEYWORDS = [
 ]
 
 PRODUCT_KEYWORDS = [
-    "多少钱", "价格", "规格", "ml", "ml", "g", "瓶", "支", "盒",
+    "多少钱", "价格", "规格", "瓶", "支", "盒",
     "有没有", "还有货", "库存", "在哪买", "怎么买", "链接", "版本",
     "适合", "油皮", "干皮", "敏感肌", "混合性", "油性", "干性",
 ]
+
+# 规格单位必须跟在数字后（"50g" / "30ml" / "50克"），
+# 否则裸子串会把 "good" / "html" 里的 g / ml 误判成产品咨询。
+PRODUCT_UNIT_RE = re.compile(r"\d+\s*(?:g|ml|克|毫升)", re.IGNORECASE)
 
 SKIN_TYPE_KEYWORDS = [
     "油皮", "干皮", "敏感肌", "混合性", "油性", "干性", "痘痘肌",
@@ -118,6 +122,9 @@ class IntentRouter:
 
         # 5. 产品咨询
         product_kw = [kw for kw in PRODUCT_KEYWORDS if kw.lower() in lower]
+        unit = PRODUCT_UNIT_RE.search(lower)
+        if unit:
+            product_kw.append(unit.group(0))
         if product_kw:
             hits["product"] = product_kw
 

@@ -334,6 +334,28 @@ def run_test_suite():
     results["pass"] += intent_pass
     results["fail"] += len(TEST_CASES) - intent_pass
 
+    # 1b. 回归：规格单位不能被裸 g/ml 误判（2026-11-02）
+    # "good"/"html" 曾因 PRODUCT_KEYWORDS 里的单字母 "g"/"ml" 被判成 product；
+    # 现在单位必须跟在数字后（"50g"/"30ml"），裸字母不再命中。
+    regression = [
+        ("good", "general"),
+        ("html", "general"),
+        ("What is good for skin?", "general"),
+        ("50g", "product"),
+        ("30ml", "product"),
+        ("30毫升", "product"),
+    ]
+    reg_pass = 0
+    print("\n  [回归] 规格单位 vs 单字母误判")
+    for q, expected in regression:
+        got = router.classify(q)["intent"]
+        ok = got == expected
+        reg_pass += ok
+        print(f"  {'✅' if ok else '❌'} {q!r} 预期:{expected} 实际:{got}")
+    results["total"] += len(regression)
+    results["pass"] += reg_pass
+    results["fail"] += len(regression) - reg_pass
+
     # ---- 2. 合规检查测试 ----
     print("\n" + "=" * 70)
     print("  二、合规风控测试")
